@@ -1,0 +1,45 @@
+sequenceDiagram
+
+title 0.4: New note diagram
+
+participant browser
+participant server
+
+note left of browser: The user wrote down "hello" and clicked the Save button
+
+browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate server
+    note left of browser: The browser sent form data of "note=hello"
+
+    server->> server:created a new note object
+
+    server-->>browser: ask for URL redirect
+    deactivate server
+
+browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: HTML document
+    deactivate server
+
+browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
+
+    Note right of browser: The browser started executing the JavaScript code that fetches the JSON from the server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{content: "jio", date: "2025-08-06T18:07:15.970Z"}, {content: "", date: "2025-08-06T18:09:51.170Z"},…]
+    deactivate server
+
+    Note right of browser: The browser executed the callback function that renders the notes
+
+
+note right of server: The server sent new data with "hello"
+

@@ -1,0 +1,26 @@
+sequenceDiagram
+
+title 0.6: New note in Single page app diagram
+
+participant browser
+participant server
+
+note left of browser: The user wrote down "hello" and clicked the Save button
+note left of browser: The browser executed the JavaScript code
+
+browser->>browser:  fetched a reference to the HTML form element on the page that has the ID "notes_form"
+    activate browser
+
+browser->>browser: created a new note
+
+browser->>browser: rerendered the note list on the page
+
+browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+    note left of browser: The browser sent form data of "note=hello"
+
+    server->> server:created a new note object
+    server-->>browser: status code 201
+    
+    deactivate browser
+    deactivate server
